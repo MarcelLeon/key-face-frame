@@ -322,12 +322,12 @@ MIT License
 
 ## 联系方式
 
-- Issues: [GitHub Issues](https://github.com/yourusername/key-face-frame/issues)
-- Email: your.email@example.com
+- Issues: [GitHub Issues](https://github.com/MarcelLeon/key-face-frame/issues)
+- Email: wangzq0708@gmail.com
 
 ---
 
 **版本**: v1.0.0 (MVP)
-**最后更新**: 2025-12-07
+**最后更新**: 2025-12
 
 **注意**：本项目仅用于学习和研究。处理视频时请遵守相关版权法律。
