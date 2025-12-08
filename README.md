@@ -2,6 +2,17 @@
 
 视频人物关键帧提取工具。从视频中自动检测人物，提取质量较高的关键帧并保存为图片。
 
+以《凡人重返天南16集》预告为模版
+效果图如下：
+<img width="715" height="398" alt="image" src="https://github.com/user-attachments/assets/5d3016d9-0fc8-4ae8-8893-5d89388da13f" />
+<img width="712" height="398" alt="image" src="https://github.com/user-attachments/assets/b407e722-bdf1-42ad-b3f6-7c6cf3ce03f0" />
+<img width="718" height="398" alt="image" src="https://github.com/user-attachments/assets/0ca4ac18-7176-47c9-813a-a6dde22c355f" />
+<img width="713" height="403" alt="image" src="https://github.com/user-attachments/assets/540fb9f2-66dd-46a5-9cd1-b0dd9519d696" />
+<img width="711" height="403" alt="image" src="https://github.com/user-attachments/assets/4b0b45c9-cebd-4756-af60-146d06c1c2cf" />
+<img width="712" height="400" alt="image" src="https://github.com/user-attachments/assets/ee3b3726-db0f-427f-a992-c6a3c50894fb" />
+<img width="716" height="400" alt="image" src="https://github.com/user-attachments/assets/71c3c461-b1c9-4b77-a03f-ebbc0c7c6d5a" />
+<img width="713" height="398" alt="image" src="https://github.com/user-attachments/assets/00d4294b-9b71-41bb-a515-d82fd02a4c1e" />
+
 ## 项目背景
 
 在处理视频素材时，经常需要从中提取包含人物的关键帧作为缩略图或用于后续处理。手动截图效率低，这个工具可以自动完成这个过程：检测视频中的人物，按质量评分选出最佳帧，保存为图片文件。
