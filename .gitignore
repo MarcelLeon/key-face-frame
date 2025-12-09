@@ -95,3 +95,8 @@ temp/
 # Documentation Build
 docs/_build/
 site/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/

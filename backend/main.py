@@ -5,9 +5,11 @@ Main application configuration and initialization.
 """
 
 import logging
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from backend.api.dependencies import engine
 from backend.api.routes import video
@@ -43,6 +45,12 @@ logger.info("Database tables created")
 
 # Include routers
 app.include_router(video.router, prefix="/api", tags=["videos"])
+
+# Mount static files for serving keyframe images
+output_dir = Path("output").absolute()
+output_dir.mkdir(exist_ok=True)
+app.mount("/files", StaticFiles(directory=str(output_dir)), name="output_files")
+logger.info(f"Static files mounted at /files -> {output_dir}")
 
 
 @app.get("/health")
