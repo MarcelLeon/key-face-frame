@@ -2,6 +2,9 @@
 
 视频人物关键帧提取工具。从视频中自动检测人物，提取质量较高的关键帧并保存为图片。
 
+交互UI：
+<img width="1333" height="945" alt="image" src="https://github.com/user-attachments/assets/a674698b-7f1e-4000-b604-ab9fbd26cf70" />
+
 以《凡人重返天南16集》预告为模版
 效果图如下：
 <img width="715" height="398" alt="image" src="https://github.com/user-attachments/assets/5d3016d9-0fc8-4ae8-8893-5d89388da13f" />
