@@ -4,6 +4,7 @@
 
 交互UI：
 <img width="1333" height="945" alt="image" src="https://github.com/user-attachments/assets/a674698b-7f1e-4000-b604-ab9fbd26cf70" />
+<img width="1246" height="948" alt="image" src="https://github.com/user-attachments/assets/2e1b8af3-e566-4747-93fa-72ddf87d24aa" />
 
 以《凡人重返天南16集》预告为模版
 效果图如下：
