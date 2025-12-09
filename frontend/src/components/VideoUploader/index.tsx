@@ -23,7 +23,7 @@
  */
 
 import React, { useState } from 'react';
-import { Upload, message, Progress, Typography } from 'antd';
+import { Upload, App, Progress, Typography } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { uploadVideo } from '@/api/video';
@@ -64,6 +64,9 @@ export const VideoUploader: React.FC<VideoUploaderProps> = ({
   onSuccess,
   disabled = false,
 }) => {
+  // ========== Hooks ==========
+  const { message } = App.useApp();
+
   // ========== State ==========
   const [uploading, setUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);

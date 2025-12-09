@@ -87,13 +87,50 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
 ### 3. 安装依赖
 
+**Python依赖**:
 ```bash
 pip install -r requirements.txt
 ```
 
 首次运行时会自动下载 YOLOv8 模型（约 50MB）。
 
-### 4. 运行示例
+**Redis服务器** (必需):
+```bash
+# macOS (使用Homebrew)
+brew install redis
+redis-server --daemonize yes
+
+# 或使用系统服务
+brew services start redis
+
+# Linux (Ubuntu/Debian)
+sudo apt-get install redis-server
+sudo systemctl start redis
+
+# 验证Redis运行
+redis-cli ping  # 应返回: PONG
+```
+
+### 4. 启动服务
+
+**启动Celery Worker** (必需 - 用于异步视频处理):
+```bash
+# 从项目根目录启动
+cd /path/to/key-face-frame
+source .venv/bin/activate
+
+# macOS M系列芯片必须使用 --pool=solo 参数
+celery -A backend.workers.tasks worker --loglevel=info --pool=solo
+
+# 其他系统可以使用默认模式
+# celery -A backend.workers.tasks worker --loglevel=info
+```
+
+**注意（macOS M系列芯片用户）**:
+- 必须使用 `--pool=solo` 参数避免MPS与prefork模式的冲突
+- 详见 [FAQ.md](FAQ.md#q3-celery-worker崩溃-worker-exited-prematurely-signal-6-sigabrt)
+
+### 5. 运行示例
 
 使用 Python 直接调用：
 

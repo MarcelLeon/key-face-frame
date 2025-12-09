@@ -12,7 +12,7 @@
  */
 
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, App as AntdApp } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 
 // Pages
@@ -28,6 +28,7 @@ import ResultPage from '@/pages/Result';
  * 应用入口组件
  * - 配置 Ant Design 中文语言包
  * - 配置 React Router 路由
+ * - 使用 App 组件提供静态方法上下文（message、modal等）
  */
 function App() {
   return (
@@ -40,19 +41,21 @@ function App() {
         },
       }}
     >
-      <Routes>
-        {/* 首页：上传和配置 */}
-        <Route path="/" element={<HomePage />} />
+      <AntdApp>
+        <Routes>
+          {/* 首页：上传和配置 */}
+          <Route path="/" element={<HomePage />} />
 
-        {/* 处理页：实时显示进度 */}
-        <Route path="/processing/:videoId" element={<ProcessingPage />} />
+          {/* 处理页：实时显示进度 */}
+          <Route path="/processing/:videoId" element={<ProcessingPage />} />
 
-        {/* 结果页：关键帧展示 */}
-        <Route path="/result/:videoId" element={<ResultPage />} />
+          {/* 结果页：关键帧展示 */}
+          <Route path="/result/:videoId" element={<ResultPage />} />
 
-        {/* 404重定向到首页 */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          {/* 404重定向到首页 */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AntdApp>
     </ConfigProvider>
   );
 }

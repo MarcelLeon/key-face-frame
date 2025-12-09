@@ -131,7 +131,11 @@ export const ProcessingStatus: React.FC<ProcessingStatusProps> = ({
   if (loading && !status) {
     return (
       <Card>
-        <Spin tip="加载中..." />
+        <div style={{ textAlign: 'center', padding: '40px 0' }}>
+          <Spin tip="加载中..." size="large">
+            <div style={{ minHeight: 100 }} />
+          </Spin>
+        </div>
       </Card>
     );
   }
