@@ -1,100 +1,73 @@
-# Key-Face-Frame
+# Key-Face-Frame v2.0
 
-视频人物关键帧提取工具。从视频中自动检测人物，提取质量较高的关键帧并保存为图片。
+**视频人物关键帧提取工具** - 从视频中自动检测人物，智能提取高质量关键帧
 
-交互UI：
-<img width="1333" height="945" alt="image" src="https://github.com/user-attachments/assets/a674698b-7f1e-4000-b604-ab9fbd26cf70" />
-<img width="1246" height="948" alt="image" src="https://github.com/user-attachments/assets/2e1b8af3-e566-4747-93fa-72ddf87d24aa" />
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/MarcelLeon/key-face-frame)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![React](https://img.shields.io/badge/React-18-61dafb.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6.svg)](https://www.typescriptlang.org/)
 
-以《凡人重返天南16集》预告为模版
-效果图如下：
-<img width="715" height="398" alt="image" src="https://github.com/user-attachments/assets/5d3016d9-0fc8-4ae8-8893-5d89388da13f" />
-<img width="712" height="398" alt="image" src="https://github.com/user-attachments/assets/b407e722-bdf1-42ad-b3f6-7c6cf3ce03f0" />
-<img width="718" height="398" alt="image" src="https://github.com/user-attachments/assets/0ca4ac18-7176-47c9-813a-a6dde22c355f" />
-<img width="713" height="403" alt="image" src="https://github.com/user-attachments/assets/540fb9f2-66dd-46a5-9cd1-b0dd9519d696" />
-<img width="711" height="403" alt="image" src="https://github.com/user-attachments/assets/4b0b45c9-cebd-4756-af60-146d06c1c2cf" />
-<img width="712" height="400" alt="image" src="https://github.com/user-attachments/assets/ee3b3726-db0f-427f-a992-c6a3c50894fb" />
-<img width="716" height="400" alt="image" src="https://github.com/user-attachments/assets/71c3c461-b1c9-4b77-a03f-ebbc0c7c6d5a" />
-<img width="713" height="398" alt="image" src="https://github.com/user-attachments/assets/00d4294b-9b71-41bb-a515-d82fd02a4c1e" />
+## 🎉 v2.0 完整Web应用已上线！
 
-## 项目背景
+从命令行工具升级为**完整的Web应用**，提供现代化的用户体验。
 
-在处理视频素材时，经常需要从中提取包含人物的关键帧作为缩略图或用于后续处理。手动截图效率低，这个工具可以自动完成这个过程：检测视频中的人物，按质量评分选出最佳帧，保存为图片文件。
+### ✨ 核心特性
 
-目前是命令行版本（MVP v1.0），后续会开发 Web 界面版本。
+- 🎯 **智能检测**: YOLOv8人物检测，精准识别视频中的人物
+- 📊 **多维评分**: 人物大小(40%) + 置信度(30%) + 居中度(20%) + 稳定性(10%)
+- 🚀 **实时进度**: 动态轮询机制，实时显示处理进度和当前阶段
+- 📤 **拖拽上传**: 支持拖拽和点击上传，最大500MB
+- ⚙️  **灵活配置**: 3个预设模板 + 自定义参数（采样率、关键帧数、置信度）
+- 🖼️ **关键帧画廊**: 响应式网格布局，支持按评分/时间排序
+- 💾 **批量下载**: ZIP打包下载所有关键帧
+- 🍎 **Apple Silicon**: 原生支持M系列芯片MPS加速
 
-## 功能特性
+### 📸 界面预览
 
-### 当前能力
+**Web界面**:
+<img width="1333" height="945" alt="上传界面" src="https://github.com/user-attachments/assets/a674698b-7f1e-4000-b604-ab9fbd26cf70" />
+<img width="1246" height="948" alt="结果展示" src="https://github.com/user-attachments/assets/2e1b8af3-e566-4747-93fa-72ddf87d24aa" />
 
-- **人物检测**：使用 YOLOv8 模型检测视频中的人物
-- **关键帧评分**：基于多个维度评估帧质量
-  - 人物大小（占画面比例）- 权重 40%
-  - 检测置信度 - 权重 30%
-  - 画面居中程度 - 权重 20%
-  - 追踪稳定性 - 权重 10%
-- **智能去重**：过滤掉时间上相近的重复帧
-- **批量提取**：一次处理整个视频，自动保存所有关键帧
-- **元数据记录**：保存详细的处理信息（帧位置、时间戳、评分等）
-- **GPU 加速**：在 Mac M 系列芯片上自动使用 MPS 加速
+**提取效果**（以《凡人重返天南16集》预告为例）:
+<img width="715" height="398" alt="关键帧1" src="https://github.com/user-attachments/assets/5d3016d9-0fc8-4ae8-8893-5d89388da13f" />
+<img width="712" height="398" alt="关键帧2" src="https://github.com/user-attachments/assets/b407e722-bdf1-42ad-b3f6-7c6cf3ce03f0" />
+<img width="718" height="398" alt="关键帧3" src="https://github.com/user-attachments/assets/0ca4ac18-7176-47c9-813a-a6dde22c355f" />
+<img width="713" height="403" alt="关键帧4" src="https://github.com/user-attachments/assets/540fb9f2-66dd-46a5-9cd1-b0dd9519d696" />
 
-### 能力限制
+## 🚀 快速开始
 
-**需要注意的问题：**
+### 系统要求
 
-1. **检测准确度**
-   - 使用通用人物检测模型，对侧面、遮挡、远景人物可能漏检
-   - 不区分具体人物身份，只能检测"有人"
-   - 极端光照条件下检测效果会下降
+- **Python**: 3.10+
+- **Node.js**: 20+（仅前端）
+- **Redis**: 5.0+（用于任务队列）
+- **操作系统**: macOS（推荐M系列芯片）或Linux
+- **内存**: 至少4GB可用内存
 
-2. **性能限制**
-   - 处理速度取决于视频长度和分辨率
-   - 一个 30 秒 1080p 视频大约需要 3-5 秒（M4 芯片，采样率5）
-   - 长视频建议调整采样率以加快处理
+### 安装步骤
 
-3. **评分机制**
-   - 当前评分算法相对简单，主要基于统计特征
-   - 不考虑画面美学、人物表情等主观因素
-   - 多人场景可能优先选择画面中人最大的帧
-
-4. **使用场景**
-   - 适合批量处理，提取候选关键帧
-   - 不适合对单帧质量要求极高的场景
-   - 建议作为初筛工具，人工再做精选
-
-## 系统要求
-
-- Python 3.10+
-- macOS（推荐 M 系列芯片）或 Linux
-- 至少 4GB 可用内存
-- 视频编解码器支持（系统自带即可）
-
-## 安装使用
-
-### 1. 克隆项目
+#### 1. 克隆项目
 
 ```bash
-git clone https://github.com/yourusername/key-face-frame.git
+git clone https://github.com/MarcelLeon/key-face-frame.git
 cd key-face-frame
 ```
 
-### 2. 创建虚拟环境
+#### 2. 后端设置
 
+**安装Python依赖**:
 ```bash
+# 创建虚拟环境
 python3 -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-```
 
-### 3. 安装依赖
-
-**Python依赖**:
-```bash
+# 安装依赖
 pip install -r requirements.txt
+
+# 首次运行会自动下载YOLOv8模型（约50MB）
 ```
 
-首次运行时会自动下载 YOLOv8 模型（约 50MB）。
-
-**Redis服务器** (必需):
+**安装并启动Redis**:
 ```bash
 # macOS (使用Homebrew)
 brew install redis
@@ -111,11 +84,26 @@ sudo systemctl start redis
 redis-cli ping  # 应返回: PONG
 ```
 
-### 4. 启动服务
+#### 3. 前端设置
 
-**启动Celery Worker** (必需 - 用于异步视频处理):
 ```bash
-# 从项目根目录启动
+cd frontend
+npm install
+```
+
+### 启动应用
+
+**需要启动4个服务**（推荐使用4个终端窗口）:
+
+#### 终端1: FastAPI后端
+```bash
+cd /path/to/key-face-frame
+source .venv/bin/activate
+uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+#### 终端2: Celery Worker
+```bash
 cd /path/to/key-face-frame
 source .venv/bin/activate
 
@@ -126,13 +114,66 @@ celery -A backend.workers.tasks worker --loglevel=info --pool=solo
 # celery -A backend.workers.tasks worker --loglevel=info
 ```
 
-**注意（macOS M系列芯片用户）**:
+**重要提示（macOS M系列芯片用户）**:
 - 必须使用 `--pool=solo` 参数避免MPS与prefork模式的冲突
 - 详见 [FAQ.md](FAQ.md#q3-celery-worker崩溃-worker-exited-prematurely-signal-6-sigabrt)
 
-### 5. 运行示例
+#### 终端3: Redis（如果未使用系统服务）
+```bash
+redis-server
+```
 
-使用 Python 直接调用：
+#### 终端4: 前端开发服务器
+```bash
+cd frontend
+npm run dev
+```
+
+**访问应用**: http://localhost:3000
+
+### 生产环境部署
+
+```bash
+# 构建前端
+cd frontend
+npm run build
+
+# 启动后端（会自动服务静态文件）
+cd ../
+source .venv/bin/activate
+uvicorn backend.main:app --host 0.0.0.0 --port 8000
+```
+
+## 📖 使用指南
+
+### Web界面使用流程
+
+1. **选择处理模式**
+   - 快速模式：采样率10，10个关键帧
+   - 标准模式：采样率5，20个关键帧（推荐）
+   - 高质量模式：采样率1，50个关键帧
+
+2. **上传视频**
+   - 拖拽视频到上传区域，或点击选择文件
+   - 支持格式：MP4、MOV、AVI、MKV
+   - 文件大小限制：500MB
+
+3. **实时监控**
+   - 自动跳转到处理页面
+   - 实时显示进度（0-100%）
+   - 显示当前阶段（检测中/提取中）
+   - 显示元数据（总帧数、检测数、处理时间）
+
+4. **查看结果**
+   - 处理完成后自动跳转到结果页
+   - 查看所有关键帧（网格布局）
+   - 点击任意帧放大预览
+   - 按评分或时间排序
+   - 下载所有关键帧（ZIP）
+
+### 命令行使用（Python API）
+
+仍然支持v1.0的命令行方式：
 
 ```python
 import asyncio
@@ -142,204 +183,68 @@ from backend.core.agents.keyframe_agent import KeyframeAgent
 from backend.core.agents.lead_agent import LeadAgent
 
 async def main():
-    # 初始化处理流程
     detection_agent = DetectionAgent(model_name="yolov8m.pt")
     keyframe_agent = KeyframeAgent(output_dir=Path("output"))
     lead_agent = LeadAgent(detection_agent, keyframe_agent)
 
-    # 处理视频
     result = await lead_agent.process_video(
         video_path=Path("your_video.mp4"),
         video_id="my-video",
         config={
-            "sample_rate": 5,      # 每5帧采样1帧
-            "max_frames": 20,      # 最多提取20帧
+            "sample_rate": 5,
+            "max_frames": 20,
             "confidence_threshold": 0.5
         }
     )
 
-    # 输出结果
-    print(f"检测到 {result.total_detections} 个人物")
     print(f"提取了 {result.keyframes_extracted} 个关键帧")
-    print(f"处理时间: {result.processing_time_seconds:.2f} 秒")
     print(f"输出目录: {result.keyframe_dir}")
 
 if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-### 5. 查看结果
+## 🏗️ 技术架构
+
+### 技术栈
+
+**后端**:
+- FastAPI 0.109.0 - Web框架
+- SQLAlchemy 2.0.25 - ORM
+- Celery 5.3.6 - 异步任务队列
+- Redis 5.0.1 - 消息队列
+- YOLOv8 8.1.18 - 人物检测
+- OpenCV 4.9.0 - 图像处理
+- PyTorch 2.2.0 - 深度学习框架
+
+**前端**:
+- React 18 - UI框架
+- TypeScript 5 - 类型安全
+- Vite 5 - 构建工具
+- Ant Design 5 - UI组件库
+- Zustand 4 - 状态管理
+- Axios 1 - HTTP客户端
+- React Router 6 - 路由管理
+
+### 核心架构
 
 ```
-output/
-└── video-my-video/
-    ├── keyframes/
-    │   ├── frame_00045_t2.81s.jpg
-    │   ├── frame_00135_t8.44s.jpg
-    │   └── ...
-    └── metadata.json
+Frontend (React + TS)
+    ↓ HTTP
+FastAPI (REST API)
+    ↓
+Celery Worker
+    ↓
+LeadAgent (协调器)
+    ├─> DetectionAgent (YOLOv8)
+    └─> KeyframeAgent (评分+提取)
+    ↓
+Output (JPEG + metadata.json)
 ```
 
-`metadata.json` 包含每一帧的详细信息：
-```json
-{
-  "video_id": "my-video",
-  "video_path": "/path/to/video.mp4",
-  "total_frames": 401,
-  "total_detections": 81,
-  "keyframes_extracted": 20,
-  "processing_time_seconds": 3.53,
-  "started_at": "2025-12-07T20:55:23.441360",
-  "completed_at": "2025-12-07T20:55:26.970151",
-  "keyframes": [
-    {
-      "frame_index": 185,
-      "timestamp": 11.56,
-      "score": 0.884,
-      "bbox": [1.89, 2.38, 1257.82, 715.43],
-      "filename": "frame_00185_t11.56s.jpg",
-      "track_id": null
-    }
-  ]
-}
-```
+## 📊 性能参考
 
-## 参数说明
-
-| 参数 | 说明 | 默认值 |
-|-----|------|--------|
-| `sample_rate` | 采样率（每 N 帧处理一次） | 5 |
-| `max_frames` | 最多提取帧数 | 100 |
-| `confidence_threshold` | 检测置信度阈值 (0-1) | 0.5 |
-| `jpeg_quality` | JPEG 压缩质量 (0-100) | 95 |
-| `time_threshold` | 去重时间间隔（秒） | 1.0 |
-
-**参数调优建议：**
-
-- 长视频（>5分钟）：增大 `sample_rate` 到 10-15
-- 人物较小的视频：降低 `confidence_threshold` 到 0.3-0.4
-- 需要更多候选帧：增大 `max_frames` 到 50-100
-- 减少相似帧：增大 `time_threshold` 到 2-3
-
-## 开发相关
-
-### 配置测试视频
-
-项目使用环境变量 `TEST_VIDEO_FILE` 指定测试视频路径，方便切换不同视频进行测试。
-
-**方法 1: 临时运行（推荐）**
-```bash
-# 一次性运行测试
-TEST_VIDEO_FILE="my_video.mp4" pytest tests/
-```
-
-**方法 2: 环境变量（持久）**
-```bash
-# 设置环境变量（当前终端有效）
-export TEST_VIDEO_FILE="my_video.mp4"
-pytest tests/
-```
-
-**方法 3: Shell 脚本**
-```bash
-# API 测试脚本
-TEST_VIDEO_FILE="my_video.mp4" ./tests/test_api.sh
-```
-
-**路径规则：**
-- 相对路径：基于项目根目录（如 `my_video.mp4` 或 `tests/fixtures/video.mp4`）
-- 绝对路径：直接使用（如 `/Users/xxx/Videos/test.mp4`）
-- 默认值：`WanAnimate_00001_p84-audio_gouns_1765004610.mp4`（不设置时使用）
-
-### 运行测试
-
-```bash
-# 所有测试（使用默认视频）
-./run_tests.sh
-
-# 使用自定义视频运行测试
-TEST_VIDEO_FILE="your_video.mp4" ./run_tests.sh
-
-# 单元测试
-pytest tests/unit/ -v
-
-# 集成测试
-pytest tests/integration/ -v -m slow
-
-# E2E 测试
-pytest tests/e2e/ -v
-```
-
-### 代码质量
-
-当前测试覆盖率：
-- 单元测试：93 个（86% 通过）
-- 代码覆盖：89%
-- E2E 测试：4/4 通过
-
-### 项目结构
-
-```
-key-face-frame/
-├── backend/
-│   ├── core/
-│   │   ├── agents/          # 核心处理逻辑
-│   │   │   ├── detection_agent.py    # 人物检测
-│   │   │   ├── keyframe_agent.py     # 关键帧提取
-│   │   │   └── lead_agent.py         # 流程编排
-│   │   └── exceptions.py    # 异常定义
-│   ├── api/                 # REST API（已实现，未启用）
-│   │   ├── routes/
-│   │   └── schemas/
-│   ├── workers/             # Celery 后台任务（已实现，未启用）
-│   └── models/              # 数据库模型（已实现，未启用）
-├── tests/                   # 测试代码
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
-├── output/                  # 输出目录
-├── docs/                    # 文档归档
-└── requirements.txt
-```
-
-## 后续计划
-
-**v2.0 - Web 界面版本**（计划中）
-
-- 可视化操作界面
-- 拖拽上传视频
-- 实时处理进度显示
-- 在线预览关键帧
-- 批量下载功能
-- 参数调整面板
-
-**v3.0 - 功能增强**（待定）
-
-- 人脸识别（区分不同人物）
-- 场景检测（区分不同场景）
-- 更精细的质量评估
-- 视频片段剪辑
-- 批量处理多个视频
-
-## 技术栈
-
-- **检测模型**：YOLOv8 (Ultralytics)
-- **图像处理**：OpenCV
-- **开发语言**：Python 3.10+
-- **测试框架**：Pytest
-- **API 框架**：FastAPI（已实现，待启用）
-- **任务队列**：Celery + Redis（已实现，待启用）
-
-## 已知问题
-
-1. ~~部分单元测试失败~~（Mock 环境问题，不影响实际使用）
-2. API 接口已实现但未启用（等待前端集成）
-3. Windows 系统未经充分测试
-4. 超长视频（>1小时）内存占用较高
-
-## 性能参考
-
-基于 Mac M4 测试数据：
+基于Mac M4测试数据：
 
 | 视频时长 | 分辨率 | 采样率 | 检测数 | 关键帧 | 处理时间 |
 |---------|--------|--------|--------|--------|----------|
@@ -347,28 +252,116 @@ key-face-frame/
 | 60秒    | 1080p  | 5      | 150+   | 20     | ~7秒     |
 | 120秒   | 1080p  | 10     | 200+   | 30     | ~10秒    |
 
-*以上数据仅供参考，实际性能取决于视频内容、硬件配置等因素*
+## 📁 输出结构
 
-## 贡献指南
+```
+output/
+└── video-{video_id}/
+    ├── keyframes/
+    │   ├── frame_00045_t2.81s.jpg
+    │   ├── frame_00135_t8.44s.jpg
+    │   └── ...
+    └── metadata.json
+```
 
-欢迎提 Issue 和 PR。请确保：
+**metadata.json示例**:
+```json
+{
+  "video_id": "my-video",
+  "total_frames": 790,
+  "total_detections": 123,
+  "keyframes_extracted": 20,
+  "processing_time_seconds": 7.08,
+  "keyframes": [
+    {
+      "frame_index": 130,
+      "timestamp": 5.2,
+      "score": 0.880,
+      "bbox": [460.99, 4.19, 1419.37, 1065.93],
+      "filename": "frame_00130_t5.20s.jpg"
+    }
+  ]
+}
+```
 
-1. 代码通过 `black` 和 `isort` 格式化
+## 🐛 故障排查
+
+### 常见问题
+
+遇到问题？请查看 **[FAQ.md](FAQ.md)** 获取详细的故障排查指南，包括：
+
+- Redis和Celery安装配置问题
+- macOS M芯片MPS崩溃解决方案
+- 前端路由和Ant Design警告
+- 视频处理问题排查
+- 性能优化建议
+
+### 查看日志
+
+**后端日志**:
+```bash
+# FastAPI日志（在运行uvicorn的终端）
+# Celery worker日志（在运行celery的终端）
+
+# 或使用debug模式查看详细日志
+celery -A backend.workers.tasks worker --loglevel=debug
+```
+
+**前端日志**:
+- 打开浏览器开发者工具（F12）
+- 查看Console标签页
+- 查看Network标签页的API请求
+
+## 🧪 测试
+
+```bash
+# 运行所有测试
+./run_tests.sh
+
+# 单元测试
+pytest tests/unit/ -v
+
+# 集成测试
+pytest tests/integration/ -v -m slow
+
+# E2E测试
+pytest tests/e2e/ -v
+```
+
+## 🗺️ 路线图
+
+### v2.1 - 功能增强
+- [ ] 历史记录页面
+- [ ] 批量处理多个视频
+- [ ] 视频预览功能
+- [ ] 关键帧编辑和标注
+
+### v3.0 - 高级功能
+- [ ] 人脸识别（区分不同人物）
+- [ ] 场景检测
+- [ ] 视频剪辑功能
+- [ ] 用户认证和多用户支持
+
+## 🤝 贡献指南
+
+欢迎提Issue和PR！请确保：
+
+1. 代码通过`black`和`isort`格式化
 2. 新功能有对应的测试
-3. 测试通过 `./run_tests.sh`
+3. 前端遵循TypeScript严格模式
+4. 添加清晰的注释和文档
 
-## 许可证
+## 📄 许可证
 
 MIT License
 
-## 联系方式
+## 📧 联系方式
 
 - Issues: [GitHub Issues](https://github.com/MarcelLeon/key-face-frame/issues)
 - Email: wangzq0708@gmail.com
 
 ---
 
-**版本**: v1.0.0 (MVP)
-**最后更新**: 2025-12
-
-**注意**：本项目仅用于学习和研究。处理视频时请遵守相关版权法律。
+**版本**: v2.0.0
+**最后更新**: 2025-12-10
+**注意**: 本项目仅用于学习和研究。处理视频时请遵守相关版权法律。
