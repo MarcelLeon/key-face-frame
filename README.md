@@ -360,6 +360,15 @@ MIT License
 - Issues: [GitHub Issues](https://github.com/MarcelLeon/key-face-frame/issues)
 - Email: wangzq0708@gmail.com
 
+## 💖 赞助支持 / Sponsor
+
+如果这个项目对你有帮助，欢迎赞助支持开发！🥰
+
+<p align="center">
+支付宝Alipay:<img src="docs/images/alipay.png" width="200" alt="支付宝" />
+微信支付Wechat<img src="docs/images/wechat.png" width="200" alt="微信支付" />
+</p>
+
 ---
 
 **版本**: v2.0.0
