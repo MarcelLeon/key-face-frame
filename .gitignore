@@ -51,6 +51,9 @@ coverage.xml
 CLAUDE.md
 .claude/
 
+# License Keys (DO NOT COMMIT!)
+license.key
+
 # Environment Variables
 .env
 .env.local

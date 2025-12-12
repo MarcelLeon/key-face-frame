@@ -13,6 +13,7 @@ from fastapi.staticfiles import StaticFiles
 
 from backend.api.dependencies import engine
 from backend.api.routes import video
+from backend.core.license import license_validator
 from backend.models.video import Base
 
 # Configure logging
@@ -59,10 +60,28 @@ async def health_check():
     return {"status": "healthy"}
 
 
+@app.get("/api/license")
+async def get_license_status():
+    """
+    Get license status.
+
+    Returns:
+        License information including status, message, and masked key (if valid)
+    """
+    return license_validator.validate()
+
+
 @app.on_event("startup")
 async def startup_event():
     """Run on application startup."""
     logger.info("Key-Face-Frame API starting up...")
+
+    # Log license status
+    license_status = license_validator.validate()
+    logger.info(f"License Status: {license_status['message']}")
+    if license_status.get("key"):
+        logger.info(f"License Key: {license_status['key']}")
+
     logger.info("API documentation available at /docs")
 
 

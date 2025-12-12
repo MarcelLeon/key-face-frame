@@ -6,7 +6,7 @@ Asynchronous video processing tasks.
 
 import asyncio
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict
 
@@ -72,7 +72,7 @@ def process_video_task(
 
         # Update status to processing
         video.status = "processing"
-        video.started_at = datetime.utcnow()
+        video.started_at = datetime.now(timezone.utc)  # Use timezone-aware datetime
         video.progress = 0
         db.commit()
 
@@ -118,7 +118,7 @@ def process_video_task(
         video.status = "completed"
         video.progress = 100
         video.stage = "complete"
-        video.completed_at = datetime.utcnow()
+        video.completed_at = datetime.now(timezone.utc)  # Use timezone-aware datetime
         video.total_frames = result.total_frames
         video.total_detections = result.total_detections
         video.keyframes_extracted = result.keyframes_extracted
@@ -145,7 +145,7 @@ def process_video_task(
         # Update video status to failed
         video.status = "failed"
         video.error_message = str(e)
-        video.completed_at = datetime.utcnow()
+        video.completed_at = datetime.now(timezone.utc)  # Use timezone-aware datetime
         db.commit()
 
         return {"video_id": video_id, "status": "failed", "error_message": str(e)}

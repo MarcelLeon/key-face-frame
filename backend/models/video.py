@@ -4,7 +4,7 @@ Video Models
 SQLAlchemy ORM models for video processing data.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import JSON, Column, DateTime, Float, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
@@ -52,8 +52,8 @@ class Video(Base):
     # Error handling
     error_message = Column(String, nullable=True)
 
-    # Timestamps
-    created_at = Column(DateTime, default=datetime.utcnow)
+    # Timestamps (using timezone-aware UTC datetime)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     started_at = Column(DateTime, nullable=True)
     completed_at = Column(DateTime, nullable=True)
 
