@@ -60,6 +60,12 @@ AGENTS_DETAILED.md
 .aider*
 .agents.local.md
 
+# Windows 开发文档（本地参考，不提交）
+COMPLETION_REPORT.md
+TEST_WINDOWS.md
+WINDOWS_FIX_SUMMARY.md
+WINDOWS_QUICKREF.txt
+
 # Environment Variables
 .env
 .env.local
