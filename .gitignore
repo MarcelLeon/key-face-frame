@@ -52,6 +52,7 @@ CLAUDE.md
 .claude/
 
 # AI CLI 相关文档（不提交）
+AGENTS.md
 AGENTS_DETAILED.md
 .cursorrules
 .github/copilot-instructions.md
