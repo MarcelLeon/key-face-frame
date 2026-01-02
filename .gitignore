@@ -51,6 +51,14 @@ coverage.xml
 CLAUDE.md
 .claude/
 
+# AI CLI 相关文档（不提交）
+AGENTS_DETAILED.md
+.cursorrules
+.github/copilot-instructions.md
+.cursor/
+.aider*
+.agents.local.md
+
 # Environment Variables
 .env
 .env.local
@@ -70,6 +78,7 @@ output/
 # Logs
 *.log
 logs/
+*.pid
 
 # Database
 *.db
