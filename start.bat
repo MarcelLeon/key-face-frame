@@ -110,14 +110,50 @@ python -m pip install --upgrade pip >nul 2>&1
 
 REM 检查依赖
 if not exist ".venv\Scripts\uvicorn.exe" (
-    echo %YELLOW%[WARN]%NC% 后端依赖未安装，正在安装...
-    echo %BLUE%[INFO]%NC% Windows会自动下载预编译包，无需C编译器
-    pip install -r requirements.txt
+    echo %YELLOW%[WARN]%NC% 后端依赖未安装
+    echo.
+    echo %BLUE%推荐方案：%NC%
+    echo   运行 install_windows.bat 进行依赖安装（避免编译问题）
+    echo.
+    choice /C YN /M "是否现在运行自动安装"
+    if errorlevel 2 goto MANUAL_INSTALL
     if errorlevel 1 (
-        echo %RED%[ERROR]%NC% 依赖安装失败！请检查网络连接
+        call install_windows.bat
+        if errorlevel 1 (
+            echo %RED%[ERROR]%NC% 安装失败
+            pause
+            exit /b 1
+        )
+        goto INSTALL_DONE
+    )
+    
+    :MANUAL_INSTALL
+    echo %BLUE%[INFO]%NC% 手动安装模式...
+    echo %BLUE%[INFO]%NC% Windows会自动下载预编译包，无需C编译器
+    
+    REM 先安装关键的预编译包（避免从源码编译）
+    echo %BLUE%[INFO]%NC% 安装核心依赖（预编译版本）...
+    pip install --only-binary :all: numpy pillow torch torchvision 2>nul
+    
+    if errorlevel 1 (
+        echo %YELLOW%[WARN]%NC% 标准安装失败，使用备用源...
+        REM 使用清华镜像源安装预编译包
+        pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --only-binary :all: numpy pillow
+        pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+    )
+    
+    REM 然后安装其他依赖
+    echo %BLUE%[INFO]%NC% 安装其他依赖...
+    pip install -r requirements.txt
+    
+    if errorlevel 1 (
+        echo %RED%[ERROR]%NC% 依赖安装失败！
+        echo %YELLOW%[提示]%NC% 请尝试运行: install_windows.bat
         pause
         exit /b 1
     )
+    
+    :INSTALL_DONE
     echo %GREEN%[SUCCESS]%NC% 后端依赖安装完成
 )
 
