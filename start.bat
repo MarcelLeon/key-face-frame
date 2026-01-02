@@ -104,10 +104,20 @@ REM 激活虚拟环境
 call .venv\Scripts\activate.bat
 echo %GREEN%[SUCCESS]%NC% 虚拟环境已激活
 
+REM 升级pip以确保获取最新的预编译包
+echo %BLUE%[INFO]%NC% 升级pip...
+python -m pip install --upgrade pip >nul 2>&1
+
 REM 检查依赖
 if not exist ".venv\Scripts\uvicorn.exe" (
     echo %YELLOW%[WARN]%NC% 后端依赖未安装，正在安装...
+    echo %BLUE%[INFO]%NC% Windows会自动下载预编译包，无需C编译器
     pip install -r requirements.txt
+    if errorlevel 1 (
+        echo %RED%[ERROR]%NC% 依赖安装失败！请检查网络连接
+        pause
+        exit /b 1
+    )
     echo %GREEN%[SUCCESS]%NC% 后端依赖安装完成
 )
 
@@ -173,8 +183,8 @@ REM 6. 启动后端服务
 REM ==============================================================================
 echo %BLUE%[INFO]%NC% 启动FastAPI后端服务...
 
-call .venv\Scripts\activate.bat
-start /B cmd /c "uvicorn backend.main:app --host 0.0.0.0 --port 8000 > logs\backend.log 2>&1"
+REM 使用完整路径启动uvicorn
+start /B cmd /c "call .venv\Scripts\activate.bat && uvicorn backend.main:app --host 0.0.0.0 --port 8000 > logs\backend.log 2>&1"
 
 timeout /t 2 /nobreak >nul
 netstat -ano | findstr :8000 | findstr LISTENING >nul
@@ -191,7 +201,7 @@ REM ============================================================================
 echo %BLUE%[INFO]%NC% 启动Celery任务处理器...
 echo %BLUE%[INFO]%NC% Windows系统使用默认pool模式
 
-start /B cmd /c "celery -A backend.workers.tasks worker --loglevel=info > logs\celery.log 2>&1"
+start /B cmd /c "call .venv\Scripts\activate.bat && celery -A backend.workers.tasks worker --loglevel=info > logs\celery.log 2>&1"
 
 timeout /t 2 /nobreak >nul
 echo %GREEN%[SUCCESS]%NC% Celery Worker已启动
@@ -215,7 +225,7 @@ echo %BLUE%[INFO]%NC% 等待服务完全启动...
 
 set RETRY_COUNT=0
 :CHECK_BACKEND
-curl -s http://localhost:8000/docs >nul 2>&1
+curl -s http://localhost:8000/health >nul 2>&1
 if errorlevel 1 (
     set /a RETRY_COUNT+=1
     if !RETRY_COUNT! LSS 10 (
@@ -224,6 +234,7 @@ if errorlevel 1 (
         goto CHECK_BACKEND
     ) else (
         echo %RED%[ERROR]%NC% 后端服务未能正常启动
+        echo %YELLOW%[WARN]%NC% 查看日志: type logs\backend.log
         pause
         exit /b 1
     )

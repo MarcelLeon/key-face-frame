@@ -16,7 +16,7 @@ asyncpg>=0.30.0  # Python 3.13 支持
 # Computer Vision & AI
 opencv-python>=4.9.0.80
 ultralytics>=8.1.0
-numpy>=1.26.4,<3.0.0  # Python 3.13 支持
+numpy>=1.26.4  # Python 3.13 支持（自动使用预编译wheel）
 pillow>=10.3.0  # 支持 Python 3.13+
 torch>=2.6.0  # Python 3.13 支持
 torchvision>=0.21.0  # 匹配 torch 2.6+
