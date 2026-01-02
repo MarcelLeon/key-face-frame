@@ -257,7 +257,7 @@ log_info "等待服务完全启动..."
 MAX_RETRIES=10
 RETRY_COUNT=0
 while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-    if curl -s http://localhost:8000/docs > /dev/null 2>&1; then
+    if curl -s http://localhost:8000/health > /dev/null 2>&1; then
         log_success "后端服务健康检查通过"
         break
     fi
