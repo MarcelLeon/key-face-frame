@@ -17,7 +17,7 @@ asyncpg==0.29.0
 opencv-python==4.9.0.80
 ultralytics==8.1.18
 numpy==1.26.3
-pillow==10.2.0
+pillow>=10.3.0  # 支持 Python 3.13+
 torch==2.2.0
 torchvision==0.17.0
 
