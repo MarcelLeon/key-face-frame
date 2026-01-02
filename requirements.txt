@@ -14,7 +14,8 @@ alembic>=1.13.1
 asyncpg>=0.30.0  # Python 3.13 支持
 
 # Computer Vision & AI
-opencv-python>=4.9.0.80
+opencv-python>=4.9.0.80  # macOS/Linux使用；Windows若安装失败请用opencv-python-headless
+# opencv-python-headless>=4.9.0.80  # Windows替代方案（无GUI依赖）
 ultralytics>=8.1.0
 numpy>=1.26.4  # Python 3.13 支持（自动使用预编译wheel）
 pillow>=10.3.0  # 支持 Python 3.13+

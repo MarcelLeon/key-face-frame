@@ -75,6 +75,25 @@ start.bat
 
 A: 因为pip从PyPI下载了源码包（.tar.gz）而不是预编译包（.whl）。使用 `--only-binary :all:` 参数强制使用预编译包。
 
+### Q: ModuleNotFoundError: No module named 'cv2'
+
+A: Windows上OpenCV可能安装失败。解决方法：
+
+```cmd
+call .venv\Scripts\activate.bat
+
+# 卸载现有的opencv-python
+pip uninstall -y opencv-python opencv-python-headless
+
+# 安装headless版本（Windows兼容性更好）
+pip install --only-binary :all: opencv-python-headless
+
+# 验证安装
+python -c "import cv2; print('OpenCV:', cv2.__version__)"
+```
+
+**注意**：`install_windows.bat` 已自动使用 `opencv-python-headless`。如果之前安装失败，请删除虚拟环境重新运行脚本。
+
 ### Q: 公司内网源没有预编译包怎么办？
 
 A: 
@@ -100,10 +119,11 @@ install_windows.bat
 call .venv\Scripts\activate.bat
 python -c "import numpy; print('NumPy:', numpy.__version__)"
 python -c "import torch; print('PyTorch:', torch.__version__)"
+python -c "import cv2; print('OpenCV:', cv2.__version__)"
 python -c "import fastapi; print('FastAPI:', fastapi.__version__)"
 ```
 
-应该看到版本号输出，没有错误。
+应该看到版本号输出，没有错误。特别注意 **OpenCV必须成功导入**，否则后端无法启动。
 
 ## 技术说明
 
@@ -119,7 +139,13 @@ python -c "import fastapi; print('FastAPI:', fastapi.__version__)"
 1. numpy (预编译)
 2. pillow (预编译)  
 3. torch + torchvision (官方CPU版本)
-4. 其他纯Python包
+4. opencv-python-headless (预编译，Windows推荐)
+5. 其他纯Python包
 ```
 
 按这个顺序可以避免编译问题。
+
+**opencv-python vs opencv-python-headless:**
+- `opencv-python`: 包含GUI功能（cv2.imshow等），Windows上可能依赖缺失
+- `opencv-python-headless`: 无GUI依赖，服务器环境推荐，Windows兼容性更好
+- 本项目只需要图像处理功能，headless版本完全满足需求

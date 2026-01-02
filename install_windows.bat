@@ -53,7 +53,17 @@ echo 安装其他依赖...
 pip install fastapi[all] uvicorn[standard] pydantic pydantic-settings
 pip install celery[redis] redis
 pip install sqlalchemy alembic asyncpg
-pip install opencv-python ultralytics
+
+REM 安装OpenCV（Windows推荐使用headless版本）
+echo.
+echo 安装OpenCV（headless版本，Windows兼容性更好）...
+pip install --only-binary :all: opencv-python-headless
+if errorlevel 1 (
+    echo OpenCV headless版本安装失败，尝试标准版本...
+    pip install opencv-python
+)
+
+pip install ultralytics
 pip install python-multipart aiofiles python-dotenv
 
 echo.
@@ -64,8 +74,9 @@ echo.
 echo 验证安装:
 python -c "import numpy; print('NumPy:', numpy.__version__)"
 python -c "import torch; print('PyTorch:', torch.__version__)"
+python -c "import cv2; print('OpenCV:', cv2.__version__)"
 python -c "import fastapi; print('FastAPI:', fastapi.__version__)"
 echo.
-echo 现在可以运行 start.bat 启动项目
+echo 如果以上所有模块都成功导入，现在可以运行 start.bat 启动项目
 echo.
 pause

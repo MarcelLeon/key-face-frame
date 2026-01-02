@@ -49,7 +49,10 @@
 **Windows用户**：
 - 支持Windows 10/11
 - 需要安装 [Redis for Windows](https://github.com/microsoftarchive/redis/releases)
+- **首次安装请运行** `install_windows.bat` 安装依赖（自动处理预编译包问题）
 - 使用 `start.bat` 一键启动脚本
+- 如遇到 `ModuleNotFoundError: No module named 'cv2'` 错误，运行 `fix_opencv_windows.bat` 修复
+- 详见 [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md)
 
 ### 安装步骤
 
