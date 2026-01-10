@@ -36,13 +36,23 @@
 
 ## 🚀 快速开始
 
+> 💡 **首次使用？** 克隆项目后直接运行 `./start.sh`（Mac/Linux）或 `start.bat`（Windows），脚本会自动完成所有设置！
+
 ### 系统要求
 
-- **Python**: 3.10+
+- **Python**: 3.10 - 3.13
 - **Node.js**: 20+（仅前端）
 - **Redis**: 5.0+（用于任务队列）
-- **操作系统**: macOS（推荐M系列芯片）或Linux
+- **操作系统**: macOS（推荐M系列芯片）、Linux 或 Windows
 - **内存**: 至少4GB可用内存
+
+**Windows用户**：
+- 支持Windows 10/11
+- 需要安装 [Redis for Windows](https://github.com/microsoftarchive/redis/releases)
+- **首次安装请运行** `install_windows.bat` 安装依赖（自动处理预编译包问题）
+- 使用 `start.bat` 一键启动脚本
+- 如遇到 `ModuleNotFoundError: No module named 'cv2'` 错误，运行 `fix_opencv_windows.bat` 修复
+- 详见 [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md)
 
 ### 安装步骤
 
@@ -66,6 +76,32 @@ pip install -r requirements.txt
 
 # 首次运行会自动下载YOLOv8模型（约50MB）
 ```
+
+**GPU 加速支持（可选但强烈推荐 - 性能提升3-5倍）**:
+
+如果你有 NVIDIA GPU，可以安装 GPU 版本 PyTorch 获得显著性能提升：
+
+```bash
+# 方法1：使用智能安装脚本（推荐，自动检测硬件）
+python setup_pytorch.py
+
+# 方法2：手动安装 CUDA 版本
+pip uninstall -y torch torchvision
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118  # CUDA 11.8
+# 或
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121  # CUDA 12.1
+
+# 验证 GPU 可用性
+python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
+```
+
+**setup_pytorch.py 脚本功能**：
+- ✅ 自动检测 NVIDIA GPU 和 CUDA 版本
+- ✅ 自动检测 Apple Silicon (MPS加速)
+- ✅ 根据硬件安装最优 PyTorch 版本
+- ✅ 验证安装并显示加速器信息
+
+> 📊 **性能对比**: RTX 4090 (~4秒/60秒视频) | RTX 3060 (~8秒) | CPU (~25-40秒)
 
 **安装并启动Redis**:
 ```bash
@@ -93,16 +129,70 @@ npm install
 
 ### 启动应用
 
+#### 方式1：一键启动（推荐）⭐
+
+**最简单的启动方式**，自动启动所有服务：
+
+**Mac/Linux**:
+```bash
+./start.sh
+```
+
+**Windows**:
+```bash
+start.bat
+```
+
+**一键启动脚本功能**：
+- ✅ 自动检查依赖（Python、Node.js、Redis）
+- ✅ 自动安装缺失的依赖包
+- ✅ YOLOv8模型下载提示（首次运行）
+- ✅ 自动启动所有服务（后端、Celery、前端、Redis）
+- ✅ Mac M系列芯片自动使用 `--pool=solo` 优化
+- ✅ 健康检查和自动打开浏览器
+- ✅ 日志输出到 `logs/` 目录
+
+**停止服务**：
+
+**Mac/Linux**:
+```bash
+./stop.sh
+```
+
+**Windows**:
+```bash
+stop.bat
+```
+
+**查看日志**：
+```bash
+# 后端日志
+tail -f logs/backend.log
+
+# Celery日志
+tail -f logs/celery.log
+
+# 前端日志
+tail -f logs/frontend.log
+```
+
+---
+
+#### 方式2：手动启动（传统方式）
+
 **需要启动4个服务**（推荐使用4个终端窗口）:
 
-#### 终端1: FastAPI后端
+<details>
+<summary>点击展开手动启动步骤</summary>
+
+##### 终端1: FastAPI后端
 ```bash
 cd /path/to/key-face-frame
 source .venv/bin/activate
 uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-#### 终端2: Celery Worker
+##### 终端2: Celery Worker
 ```bash
 cd /path/to/key-face-frame
 source .venv/bin/activate
@@ -118,16 +208,20 @@ celery -A backend.workers.tasks worker --loglevel=info --pool=solo
 - 必须使用 `--pool=solo` 参数避免MPS与prefork模式的冲突
 - 详见 [FAQ.md](FAQ.md#q3-celery-worker崩溃-worker-exited-prematurely-signal-6-sigabrt)
 
-#### 终端3: Redis（如果未使用系统服务）
+##### 终端3: Redis（如果未使用系统服务）
 ```bash
 redis-server
 ```
 
-#### 终端4: 前端开发服务器
+##### 终端4: 前端开发服务器
 ```bash
 cd frontend
 npm run dev
 ```
+
+</details>
+
+---
 
 **访问应用**: http://localhost:3000
 
@@ -399,6 +493,6 @@ MIT License
 
 ---
 
-**版本**: v2.0.0
-**最后更新**: 2025-12-10
+**版本**: v2.0.0  
+**最后更新**: 2026-01-02  
 **注意**: 本项目仅用于学习和研究。处理视频时请遵守相关版权法律。

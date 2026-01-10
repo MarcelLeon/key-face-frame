@@ -1,29 +1,30 @@
 # Core Framework
-fastapi[all]==0.109.0
-uvicorn[standard]==0.27.0
-pydantic==2.5.3
-pydantic-settings==2.1.0
+fastapi[all]>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.10.0  # Python 3.13 支持
+pydantic-settings>=2.1.0
 
 # Task Queue
-celery[redis]==5.3.6
-redis==5.0.1
+celery[redis]>=5.3.6
+redis>=5.0.1
 
 # Database
-sqlalchemy==2.0.25
-alembic==1.13.1
-asyncpg==0.29.0
+sqlalchemy>=2.0.25
+alembic>=1.13.1
+asyncpg>=0.30.0  # Python 3.13 支持
 
 # Computer Vision & AI
-opencv-python==4.9.0.80
-ultralytics==8.1.18
-numpy==1.26.3
-pillow==10.2.0
-torch==2.2.0
-torchvision==0.17.0
+opencv-python>=4.9.0.80  # macOS/Linux使用；Windows若安装失败请用opencv-python-headless
+# opencv-python-headless>=4.9.0.80  # Windows替代方案（无GUI依赖）
+ultralytics>=8.1.0
+numpy>=1.26.4  # Python 3.13 支持（自动使用预编译wheel）
+pillow>=10.3.0  # 支持 Python 3.13+
+torch>=2.6.0  # Python 3.13 支持
+torchvision>=0.21.0  # 匹配 torch 2.6+
 
 # File Handling
-python-multipart==0.0.6
-aiofiles==23.2.1
+python-multipart>=0.0.6
+aiofiles>=23.2.1
 
 # Utilities
-python-dotenv==1.0.0
+python-dotenv>=1.0.0
