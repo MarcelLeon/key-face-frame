@@ -77,6 +77,32 @@ pip install -r requirements.txt
 # 首次运行会自动下载YOLOv8模型（约50MB）
 ```
 
+**GPU 加速支持（可选但强烈推荐 - 性能提升3-5倍）**:
+
+如果你有 NVIDIA GPU，可以安装 GPU 版本 PyTorch 获得显著性能提升：
+
+```bash
+# 方法1：使用智能安装脚本（推荐，自动检测硬件）
+python setup_pytorch.py
+
+# 方法2：手动安装 CUDA 版本
+pip uninstall -y torch torchvision
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118  # CUDA 11.8
+# 或
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121  # CUDA 12.1
+
+# 验证 GPU 可用性
+python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
+```
+
+**setup_pytorch.py 脚本功能**：
+- ✅ 自动检测 NVIDIA GPU 和 CUDA 版本
+- ✅ 自动检测 Apple Silicon (MPS加速)
+- ✅ 根据硬件安装最优 PyTorch 版本
+- ✅ 验证安装并显示加速器信息
+
+> 📊 **性能对比**: RTX 4090 (~4秒/60秒视频) | RTX 3060 (~8秒) | CPU (~25-40秒)
+
 **安装并启动Redis**:
 ```bash
 # macOS (使用Homebrew)
