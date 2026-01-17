@@ -15,6 +15,14 @@ REM ============================================================================
 setlocal enabledelayedexpansion
 chcp 65001 >nul
 
+REM 启用Windows虚拟终端ANSI转义序列支持（Windows 10+）
+REM 这将使ANSI颜色代码正常工作
+for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do rem"') do (
+  set "ESC=%%b"
+)
+REM 启用虚拟终端处理
+echo [?25l[?25h>nul
+
 REM 颜色定义（Windows 10+支持ANSI颜色）
 set "RED=[91m"
 set "GREEN=[92m"
@@ -199,16 +207,35 @@ REM ============================================================================
 echo %BLUE%[INFO]%NC% 等待服务完全启动...
 
 set RETRY_COUNT=0
+set MAX_RETRIES=30
 :CHECK_BACKEND
 curl -s http://localhost:8000/docs >nul 2>&1
 if errorlevel 1 (
     set /a RETRY_COUNT+=1
-    if !RETRY_COUNT! LSS 10 (
+    if !RETRY_COUNT! LSS %MAX_RETRIES% (
         echo | set /p=.
-        timeout /t 1 /nobreak >nul
+        timeout /t 2 /nobreak >nul
         goto CHECK_BACKEND
     ) else (
-        echo %RED%[ERROR]%NC% 后端服务未能正常启动
+        echo.
+        echo %RED%[ERROR]%NC% 后端服务未能正常启动（等待60秒后超时）
+        echo.
+        echo %YELLOW%[诊断信息]%NC%
+        echo   1. 检查端口8000占用情况:
+        netstat -ano | findstr :8000
+        echo.
+        echo   2. 检查后端进程状态:
+        tasklist | findstr python
+        echo.
+        echo   3. 查看后端日志:
+        echo      %YELLOW%type logs\backend.log%NC%
+        echo.
+        echo %YELLOW%[可能原因]%NC%
+        echo   - 后端服务启动较慢，需要更多时间
+        echo   - 依赖包安装不完整
+        echo   - 端口8000被其他程序占用
+        echo   - Python环境配置问题
+        echo.
         pause
         exit /b 1
     )

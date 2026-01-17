@@ -9,7 +9,7 @@ export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localho
 export const SUPPORTED_VIDEO_FORMATS = ['.mp4', '.mov', '.avi', '.mkv'];
 
 // 文件大小限制（字节）
-export const MAX_FILE_SIZE = 500 * 1024 * 1024; // 500MB
+export const MAX_FILE_SIZE = 2 * 1024 * 1024 * 1024; // 2GB
 
 // 轮询间隔（毫秒）
 export const POLL_INTERVALS = {

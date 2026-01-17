@@ -72,7 +72,23 @@ async def upload_video(
             detail=f"Invalid file type. Allowed: {', '.join(settings.allowed_extensions)}",
         )
 
-    # 2. Validate processing config
+    # 2. Validate file size
+    # Read file size (FastAPI UploadFile doesn't provide direct size access)
+    file.file.seek(0, 2)  # Seek to end of file
+    file_size = file.file.tell()  # Get current position (file size)
+    file.file.seek(0)  # Reset to beginning for later reading
+
+    if file_size > settings.max_upload_size:
+        max_size_mb = settings.max_upload_size / (1024 * 1024)
+        actual_size_mb = file_size / (1024 * 1024)
+        raise HTTPException(
+            status_code=413,
+            detail=f"File too large. Maximum size: {max_size_mb:.0f}MB, Actual size: {actual_size_mb:.0f}MB",
+        )
+
+    logger.info(f"File size: {file_size / (1024 * 1024):.2f}MB")
+
+    # 3. Validate processing config
     try:
         config = ProcessingConfig(
             sample_rate=sample_rate,
@@ -82,10 +98,10 @@ async def upload_video(
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
-    # 3. Generate unique video ID
+    # 4. Generate unique video ID
     video_id = str(uuid.uuid4())
 
-    # 4. Save file to upload directory
+    # 5. Save file to upload directory
     settings.upload_dir.mkdir(parents=True, exist_ok=True)
     file_path = settings.upload_dir / f"{video_id}{file_ext}"
 
@@ -96,14 +112,14 @@ async def upload_video(
         logger.error(f"Failed to save video file: {e}")
         raise HTTPException(status_code=500, detail="Failed to save video file")
 
-    # 5. Create database record
+    # 6. Create database record
     video = Video(
         id=video_id, filename=file.filename, file_path=str(file_path), status="pending", progress=0
     )
     db.add(video)
     db.commit()
 
-    # 6. Queue Celery task
+    # 7. Queue Celery task
     try:
         task = process_video_task.delay(
             video_id=video_id,
