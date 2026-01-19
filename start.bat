@@ -184,7 +184,7 @@ REM 7. 启动Celery Worker
 REM ==============================================================================
 echo %BLUE%[INFO]%NC% 启动Celery任务处理器...
 
-start /B cmd /c "celery -A backend.workers.tasks worker --loglevel=info --pool=solo > logs\celery.log 2>&1"
+start /B cmd /c "celery -A backend.workers.tasks worker --loglevel=info --pool=solo --without-heartbeat --without-gossip --without-mingle > logs\celery.log 2>&1"
 
 timeout /t 2 /nobreak >nul
 echo %GREEN%[SUCCESS]%NC% Celery Worker已启动

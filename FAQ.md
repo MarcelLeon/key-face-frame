@@ -92,6 +92,37 @@ celery -A backend.workers.tasks worker --loglevel=info
 
 ---
 
+### Q3.1: Windows上Celery报错 "拒绝访问" 或 "句柄无效"
+
+**症状**:
+```
+PermissionError(13, '拒绝访问', None, 5, None)
+OSError: [WinError 6] 句柄无效
+```
+
+**原因**: Windows 对进程间同步原语的权限管理与 Linux/macOS 不同，billiard 的某些同步机制在 Windows 上会触发权限错误。
+
+**解决方案**:
+
+1. **使用一键启动脚本（推荐）**:
+   ```cmd
+   start.bat
+   ```
+   脚本已包含所有必要的 Windows 兼容参数。
+
+2. **手动启动时必须添加完整参数**:
+   ```cmd
+   celery -A backend.workers.tasks worker --loglevel=info --pool=solo --without-heartbeat --without-gossip --without-mingle
+   ```
+
+**说明**:
+- `--pool=solo`: 单进程模式，避免 Windows 多进程问题
+- `--without-heartbeat`: 禁用心跳检测
+- `--without-gossip`: 禁用 worker 间通信
+- `--without-mingle`: 禁用启动同步
+
+---
+
 ## 前端问题
 
 ### Q4: 前端报错 "useRoutes() may be used only in the context of a <Router> component"

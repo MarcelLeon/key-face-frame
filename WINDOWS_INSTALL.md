@@ -111,6 +111,14 @@ rmdir /s .venv
 install_windows.bat
 ```
 
+### Q: Celery报错 "拒绝访问" 或 "句柄无效"
+
+A: Windows 下 Celery 需要特殊参数。请使用 `start.bat` 一键启动，或手动启动时使用:
+
+```cmd
+celery -A backend.workers.tasks worker --loglevel=info --pool=solo --without-heartbeat --without-gossip --without-mingle
+```
+
 ## 验证安装
 
 安装完成后验证：

@@ -90,6 +90,8 @@ uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
 # 3. 启动 Celery Worker (新终端 / new terminal)
 source .venv/bin/activate
 celery -A backend.workers.tasks worker --loglevel=info --pool=solo
+# Windows用户需要额外参数 / Windows users need extra flags:
+# celery -A backend.workers.tasks worker --loglevel=info --pool=solo --without-heartbeat --without-gossip --without-mingle
 
 # 4. 启动前端 (新终端 / new terminal)
 cd frontend
@@ -286,8 +288,8 @@ taskkill /F /PID <PID>  # Windows
 # 查看 Celery 日志 / Check Celery logs
 tail -f logs/celery.log
 
-# Windows 用户需要使用 --pool=solo / Windows users must use --pool=solo
-celery -A backend.workers.tasks worker --loglevel=info --pool=solo
+# Windows 用户需要完整参数 / Windows users need full parameters
+celery -A backend.workers.tasks worker --loglevel=info --pool=solo --without-heartbeat --without-gossip --without-mingle
 ```
 
 ### 日志查看 / View Logs
