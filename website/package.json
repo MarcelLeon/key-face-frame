@@ -1,0 +1,12 @@
+{
+  "name": "key-face-frame-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 4173 --directory public --bind 127.0.0.1",
+    "check": "node scripts/check.mjs",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {"wrangler": "4.130.0"}
+}

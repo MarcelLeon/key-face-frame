@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://key-face-frame.wangzq0708.workers.dev/sitemap.xml
