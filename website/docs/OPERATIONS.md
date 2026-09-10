@@ -6,7 +6,7 @@
 | --- | --- |
 | 平台 | Cloudflare Workers Static Assets |
 | Worker 名称 | `key-face-frame` |
-| 目标域名 | `https://key-face-frame.wangzq0708.workers.dev/` |
+| 部署域名 | `https://key-face-frame.wangzq0708.workers.dev/` |
 | 仓库 | `MarcelLeon/key-face-frame` |
 | 发布目录 | `website/public/` |
 | 配置 | `website/wrangler.jsonc` |
@@ -14,7 +14,7 @@
 | 运行环境 | Node.js 22；本地预览使用 Python 3 |
 | 数据存储 | 无数据库、KV、R2 或素材上传服务 |
 
-域名为目标地址，实际上线状态见本文“发布记录”。不要仅凭配置中的 URL 判定已上线。
+已完成正式部署；本次线上内容验证与当前网络访问限制见“发布记录”。不要仅凭配置中的 URL 判定可访问。
 
 ## 本地预览与检查
 
@@ -49,7 +49,7 @@ npm --prefix website run deploy
 ```bash
 curl -fsS https://key-face-frame.wangzq0708.workers.dev/ -o /tmp/kff-home.html
 curl -I https://key-face-frame.wangzq0708.workers.dev/assets/coastal-frames.jpg
-curl -I https://key-face-frame.wangzq0708.workers.dev/privacy.html
+curl -IL https://key-face-frame.wangzq0708.workers.dev/privacy.html
 curl -I https://key-face-frame.wangzq0708.workers.dev/not-a-page
 ```
 
@@ -83,7 +83,23 @@ npx --prefix website wrangler rollback <已核实的历史版本ID> --config web
 
 ## 发布记录
 
-2026-09-10：网站本地制作完成。自检和 IAB 桌面/手机交互检查通过。Cloudflare MCP 读取正常，但 Workers 与 Pages 写入返回 10000；官方 CLI 未登录，已打开官方登录页等待用户完成授权，首次 OAuth 等待超时；继续部署前需重新运行本文登录命令。尚未把目标域名记作已上线。
+2026-09-10：通过官方 OAuth 登录后完成 Cloudflare 正式部署。
+
+- 当前正常版本：`af9791e2-92ca-4a08-9c77-477a9bb7ec37`。
+- 站点页面与素材对应 Git 提交 `1a75df45c4346f3abc12f5263a08b82eb847059c`；本次提交同步路由修正与发布记录。
+- 首版 `9d823645-9583-4909-b52e-834dabac93a2` 的 `/index.html` 正常但 `/` 为 404，已将 `html_handling` 修正为 `auto-trailing-slash` 后重新部署。不要回滚到该首版。
+- 自检及本地 IAB 桌面/手机交互检查通过。线上 HTTPS 验证：首页、CSS、JavaScript、示意图片、隐私页均为 200 且字节与本地一致，未知路径为 404；隐私页允许规范路径重定向。
+- 验证网络限制：当前设备默认 DNS 返回 `199.59.148.106`，默认浏览器与 curl 访问超时；Google Public DNS 查询返回 `104.21.32.199` 与 `172.67.154.179`。上述线上验证使用 curl `--resolve` 指向公开解析结果，保留域名与 TLS 证书校验，没有更改系统 DNS。**这证明部署内容正常，不代表当前网络默认访问或在线浏览器验收已通过。**
+- 后续在可正常解析的网络复查在线浏览器，或为产品配置另行选定的自定义域名。诊断 IP 可能变化，不能作为永久地址或 hosts 配置。
+
+排查 DNS 时可临时使用以下命令（先重新查询公开 DNS，不要长期固定 IP）：
+
+```bash
+curl -fsS 'https://dns.google/resolve?name=key-face-frame.wangzq0708.workers.dev&type=A'
+curl --resolve key-face-frame.wangzq0708.workers.dev:443:<公开解析IP> -I https://key-face-frame.wangzq0708.workers.dev/
+```
+
+GitHub push 不会自动触发部署，App Store Connect 的 Marketing URL 未在本次修改。
 
 完整仓库检查已尝试：Python 环境缺少 Black/isort/Flake8，`run_tests.sh` 在 Flake8 阶段退出，因此没有宣称旧后端测试通过。本次不改 Python 后端或 Mac App。
 

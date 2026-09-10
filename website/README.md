@@ -2,7 +2,7 @@
 
 Mac App Store 产品独立主页。深色电影感页面、交互选帧示意、工作流、能力与限制、FAQ、隐私说明、404、SEO 和安全响应头。
 
-- 目标地址：https://key-face-frame.wangzq0708.workers.dev/
+- 正式部署地址：https://key-face-frame.wangzq0708.workers.dev/
 - App Store：https://apps.apple.com/app/id6800402462
 - 产品支持：https://github.com/MarcelLeon/key-face-frame/issues
 - 部署与运维：[OPERATIONS.md](docs/OPERATIONS.md)
