@@ -83,6 +83,8 @@ npx --prefix website wrangler rollback <已核实的历史版本ID> --config web
 
 ## 发布记录
 
-2026-09-10：网站本地制作完成。自检和 IAB 桌面/手机交互检查通过。Cloudflare MCP 读取正常，但 Workers 与 Pages 写入返回 10000；官方 CLI 原先未登录，正在恢复官方登录。尚未把目标域名记作已上线。
+2026-09-10：网站本地制作完成。自检和 IAB 桌面/手机交互检查通过。Cloudflare MCP 读取正常，但 Workers 与 Pages 写入返回 10000；官方 CLI 未登录，已打开官方登录页等待用户完成授权，首次 OAuth 等待超时；继续部署前需重新运行本文登录命令。尚未把目标域名记作已上线。
 
 完整仓库检查已尝试：Python 环境缺少 Black/isort/Flake8，`run_tests.sh` 在 Flake8 阶段退出，因此没有宣称旧后端测试通过。本次不改 Python 后端或 Mac App。
+
+部署工具依赖已通过公共 npm 安装验证。2026-09-10 npm audit 报告 3 个 high 条目，根因是 Miniflare 间接依赖 sharp 的 libheif 公告；仅涉及开发/部署工具，发布目录没有 node_modules，网站无运行时 npm 依赖。未采用 audit 建议的大幅降级或强制修复。使用新工具版本时应复核并更新锁文件。
